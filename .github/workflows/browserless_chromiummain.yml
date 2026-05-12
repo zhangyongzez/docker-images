@@ -1,0 +1,21 @@
+name: Get Browserless Tarball
+
+on: 
+  workflow_dispatch: # 允许手动点击运行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Docker Image
+        run: docker pull ghcr.io/browserless/chromium
+
+      - name: Save Image to Tar
+        run: docker save ghcr.io/browserless/chromium -o browserless_chromium.tar
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: browserless_chromium-image
+          path: browserless_chromium.tar
+          retention-days: 1 # 文件仅保留1天，节省空间
