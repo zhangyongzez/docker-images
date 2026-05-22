@@ -1,0 +1,21 @@
+name: Get Gerrit Tarball
+
+on: 
+  workflow_dispatch: # 允许手动点击运行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Docker Image
+        run: docker pull gerritcodereview/gerrit
+
+      - name: Save Image to Tar
+        run: docker save gerritcodereview/gerrit:latest -o gerrit_latest.tar
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gerrit-docker-image
+          path: gerrit_latest.tar
+          retention-days: 1 # 文件仅保留1天，节省空间
