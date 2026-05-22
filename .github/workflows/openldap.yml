@@ -1,0 +1,21 @@
+name: Get openldap Tarball
+
+on: 
+  workflow_dispatch: # 允许手动点击运行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Docker Image
+        run: docker pull osixia/openldap
+
+      - name: Save Image to Tar
+        run: docker save osixia/openldap -o openldap.tar
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: openldap-image
+          path: openldap.tar
+          retention-days: 1 # 文件仅保留1天，节省空间
