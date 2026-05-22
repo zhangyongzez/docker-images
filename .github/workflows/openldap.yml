@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pull Docker Image
-        run: docker pull osixia/openldap
+        run: docker pull osixia/openldap:2.6.10-alpha
 
       - name: Save Image to Tar
-        run: docker save osixia/openldap -o openldap.tar
+        run: docker save osixia/openldap:2.6.10-alpha -o openldap.tar
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
