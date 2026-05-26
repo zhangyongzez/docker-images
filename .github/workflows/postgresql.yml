@@ -1,0 +1,21 @@
+name: Get postgres Tarball
+
+on: 
+  workflow_dispatch: # 允许手动点击运行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Docker Image
+        run: docker pull postgres:16-alpine
+
+      - name: Save Image to Tar
+        run: docker save postgres:16-alpine -o postgres.tar
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: postgres-image
+          path: postgres.tar
+          retention-days: 1 # 文件仅保留1天，节省空间
